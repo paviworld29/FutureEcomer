@@ -5,9 +5,10 @@ import AppNavigator from "./AppNavigator";
 
 
 export default function RootNavigator () {
+    const isloggedIn = true;
     return(
         <NavigationContainer >
-            <AuthNavigator />
+            {isloggedIn ? <AppNavigator /> : <AuthNavigator />}
         </NavigationContainer>
     )
 }
