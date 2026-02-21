@@ -8,10 +8,8 @@ import LikesScreen from '../screens/Main/LikesScreen';
 import ProfileScreen from '../screens/Main/ProfileScreen';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-
 import { COLORS, navigationStrings } from '../constants/Lang/navigationStrings';
 import images from '../assets/images';
-
 
 const Tab = createBottomTabNavigator();
 
@@ -20,11 +18,27 @@ export default function TabNavigator() {
     <Tab.Navigator
       initialRouteName={navigationStrings.HOME}
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         tabBarShowLabel: true,
-        tabBarStyle: { backgroundColor: COLORS.WHITE},
+        tabBarStyle: {
+          backgroundColor: COLORS.WHITE,
+          position: 'relative',
+          paddingTop: verticalScale(6),
+          height: verticalScale(75),
+        },
         tabBarActiveTintColor: COLORS.GREEN,
         tabBarInactiveTintColor: COLORS.GRAY,
+        tabBarIconStyle: {
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        tabBarLabelStyle: {
+          fontSize: verticalScale(12),
+          fontWeight: '600',
+          textAlign: 'center',
+          alignSelf: 'center',
+          width: '100%',
+        },
       }}
     >
       <Tab.Screen
@@ -36,8 +50,8 @@ export default function TabNavigator() {
               source={images.HOMEICON}
               style={{
                 tintColor: focused ? COLORS.GREEN : COLORS.GRAY,
-               width: moderateScale(35),
-              height: moderateScale(35),
+                width: moderateScale(32),
+                height: moderateScale(32),
               }}
             />
           ),
@@ -52,8 +66,8 @@ export default function TabNavigator() {
               source={images.LIKEICON}
               style={{
                 tintColor: focused ? COLORS.GREEN : COLORS.GRAY,
-                width: moderateScale(35),
-              height: moderateScale(35),
+                width: moderateScale(32),
+                height: moderateScale(32),
               }}
             />
           ),
@@ -69,15 +83,13 @@ export default function TabNavigator() {
               source={images.BAGICON}
               style={{
                 tintColor: focused ? COLORS.GREEN : COLORS.GRAY,
-                width: moderateScale(35),
-              height: moderateScale(35),
+                width: moderateScale(32),
+                height: moderateScale(32),
               }}
             />
           ),
         }}
       />
-
-
 
       <Tab.Screen
         name={navigationStrings.PROFILE}
@@ -88,8 +100,8 @@ export default function TabNavigator() {
               source={images.PROFILEICON}
               style={{
                 tintColor: focused ? COLORS.GREEN : COLORS.GRAY,
-               width: moderateScale(35),
-              height: moderateScale(35),
+                width: moderateScale(32),
+                height: moderateScale(32),
               }}
             />
           ),
@@ -105,8 +117,8 @@ export default function TabNavigator() {
               source={images.SETTINGSICON}
               style={{
                 tintColor: focused ? COLORS.GREEN : COLORS.GRAY,
-                 width: moderateScale(35),
-              height: moderateScale(35),
+                width: moderateScale(32),
+                height: moderateScale(32),
               }}
             />
           ),
