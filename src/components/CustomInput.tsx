@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-  View,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
   TextInput,
   TouchableOpacity,
-  Image,
-  StyleSheet,
-  ImageSourcePropType,
+  View,
 } from 'react-native';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
+
 
 interface CustomInputProps {
   placeholder?: string;
@@ -35,30 +37,46 @@ const CustomInput: React.FC<CustomInputProps> = ({
         value={value}
         onChangeText={onChangeText}
       />
-      {rightIcon && (
+      {rightIcon ? (
         <TouchableOpacity onPress={onRightPress}>
           <Image source={rightIcon} />
         </TouchableOpacity>
-      )}
+      ) : null}
     </View>
   );
 };
 
 export default CustomInput;
 
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+
     backgroundColor: '#FFF',
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    borderWidth: 1,
+
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: verticalScale(4),
+
+    borderRadius: moderateScale(10),
+    borderWidth: moderateScale(1),
     borderColor: '#E5E7EB',
-    marginTop: 15,
+
+    marginTop: verticalScale(15),
   },
+
   input: {
     flex: 1,
-    paddingVertical: 14,
+
+    paddingVertical: verticalScale(10),
+    fontSize: moderateScale(16),
+  },
+
+  icon: {
+    width: moderateScale(20),
+    height: moderateScale(20),
+    marginLeft: moderateScale(8),
+    resizeMode: 'contain',
   },
 });

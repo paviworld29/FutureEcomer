@@ -10,8 +10,13 @@ import {
   COLORS,
   navigationStrings,
 } from '../../constants/Lang/navigationStrings';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-const LoginScreen = () => {
+
+const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
+
+
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [remember, setRemember] = useState(false);
 
@@ -41,8 +46,8 @@ const LoginScreen = () => {
               onPress={() => setRemember(!remember)}
               activeOpacity={0.8}
             >
-              <View style={[styles.checkbox, remember && styles.checkedBox]}>
-                {remember && <Text style={styles.checkMark}>✓</Text>}
+              <View style={[styles.checkbox, remember ? styles.checkedBox:null]}>
+                {remember ? <Text style={styles.checkMark}>✓</Text>:null}
               </View>
               <Text style={styles.remember}>{navigationStrings.REMEMBER}</Text>
             </TouchableOpacity>
@@ -69,7 +74,7 @@ const LoginScreen = () => {
             <Text style={styles.signupQuestion}>
               {navigationStrings.SIGNUP_QUESTION}{' '}
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate(navigationStrings.SIGNUP)}>
               <Text style={styles.signup}>{navigationStrings.SIGNUP}</Text>
             </TouchableOpacity>
           </View>
@@ -80,71 +85,72 @@ const LoginScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  signupQuestion: {
-    fontSize: 13,
-    color: COLORS.TEXT_SECONDARY,
-  },
-
   safeArea: {
     flex: 1,
   },
 
   innerContainer: {
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: moderateScale(24),
   },
 
   logoContainer: {
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: verticalScale(40),
   },
 
   title: {
-    fontSize: 32,
+    fontSize: moderateScale(32),
     fontWeight: '700',
     color: COLORS.BLACK,
-    marginTop: 20,
+    marginTop: verticalScale(20),
   },
 
   subtitle: {
-    fontSize: 14,
+    fontSize: moderateScale(14),
     color: COLORS.TEXT_SECONDARY,
-    marginTop: 10,
+    marginTop: verticalScale(10),
   },
 
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
+    marginTop: verticalScale(20),
   },
 
   remember: {
     color: COLORS.TEXT_DARK_GRAY,
-    fontSize: 13,
+    fontSize: moderateScale(13),
   },
 
   forgot: {
     color: COLORS.LINK,
-    fontSize: 13,
+    fontSize: moderateScale(13),
     fontWeight: '500',
   },
 
   orText: {
     textAlign: 'center',
     color: COLORS.TEXT_MUTED,
-    marginTop: 10,
+    marginTop: verticalScale(10),
+    fontSize: moderateScale(13),
   },
 
   signupRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 150,
+    marginTop: verticalScale(70),
+  },
+
+  signupQuestion: {
+    fontSize: moderateScale(13),
+    color: COLORS.TEXT_SECONDARY,
   },
 
   signup: {
     color: COLORS.LINK,
     fontWeight: '600',
-    fontSize: 13,
+    fontSize: moderateScale(13),
   },
 
   rememberContainer: {
@@ -153,12 +159,12 @@ const styles = StyleSheet.create({
   },
 
   checkbox: {
-    width: 18,
-    height: 18,
-    borderWidth: 1.5,
+    width: moderateScale(18),
+    height: moderateScale(18),
+    borderWidth: moderateScale(1.5),
     borderColor: COLORS.CHECKBOX_BORDER,
-    borderRadius: 4,
-    marginRight: 8,
+    borderRadius: moderateScale(4),
+    marginRight: moderateScale(8),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -169,7 +175,7 @@ const styles = StyleSheet.create({
 
   checkMark: {
     color: COLORS.WHITE,
-    fontSize: 14,
+    fontSize: moderateScale(14),
     fontWeight: 'bold',
   },
 });

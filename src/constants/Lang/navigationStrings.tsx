@@ -11,6 +11,19 @@ export const navigationStrings = {
   GOOGLE: 'Continue with Google',
   FACEBOOK: 'Continue with Facebook',
   SIGNUP_QUESTION: "Don't have an account?",
+  SIGNUP_SCREEN: 'SignUp',
+  REGISTER: 'Register',
+  CREATE_ACCOUNT_MESSAGE: 'Create an account to continue!',
+  FIRST_NAME:'First Name',
+  LAST_NAME:'Last Name',
+  SET_PASSWORD:'Set Password',
+  ALREADY_HAVE_ACCOUNT:'Already have an account?',
+  HOME:'Home',
+  BAG:'Bag',
+  LIKES:'Likes',
+  PROFILE:'Profile',
+  SETTINGS:'Settings'
+
 };
 
 export const COLORS = {
@@ -24,4 +37,6 @@ export const COLORS = {
   BORDER_LIGHT: '#E5E7EB',
   CHECKBOX_BORDER: '#2563EB',
   CHECKBOX_BACKGROUND: '#2563EB',
+  GREEN:"green",
+  GRAY:'gray',
 };

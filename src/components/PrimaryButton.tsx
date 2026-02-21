@@ -5,6 +5,7 @@ import {
   StyleSheet,
   GestureResponderEvent,
 } from 'react-native';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 import { COLORS } from '../constants/Lang/navigationStrings';
 
 interface PrimaryButtonProps {
@@ -34,14 +35,17 @@ export default PrimaryButton;
 const styles = StyleSheet.create({
   buttonWrapper: {
     backgroundColor: COLORS.PRIMARY,
-    paddingVertical: 15,
-    borderRadius: 10,
+
+    paddingVertical: verticalScale(15),
+    borderRadius: moderateScale(10),
+
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: verticalScale(20),
   },
+
   loginText: {
     color: COLORS.WHITE,
     fontWeight: '600',
-    fontSize: 16,
+    fontSize: moderateScale(16),
   },
 });

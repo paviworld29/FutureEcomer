@@ -16,7 +16,7 @@ const GradientWrapper: React.FC<GradientWrapperProps> = ({
   return (
     <LinearGradient
       colors={colors}
-      start={{ x: 0, y: 0 }}
+      start={{ x: 1, y: 1 }}
       end={{ x: 0, y: 1 }}
       style={[{ flex: 1 }, style]}
     >
