@@ -10,7 +10,7 @@ import {
 import React from 'react';
 import { ImageSourcePropType } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import images from '../assets/images';
+import images, { AddIconSvg, HeartSvg, StarOrange } from '../assets/images';
 
 interface ProductCardProps {
   title: string;
@@ -38,18 +38,22 @@ const ProductCard: React.FC<ProductCardProps> = ({
     >
       <View style={styles.imageContainer}>
         <View style={styles.ratingContainer}>
-          <Image source={images.STARICON} />
+          <StarOrange  width={20} height={20} />
+
           <Text style={styles.ratingText}>{rating}</Text>
         </View>
 
         <TouchableOpacity>
-          <Image source={images.SMALLHEARTICON} />
+
+          <HeartSvg  width={20} height={20} />
         </TouchableOpacity>
       </View>
       <View style={styles.imageContentContainer}>
-        <Image source={image} />
+        <Image source={image} style={styles.productImage} />
       </View>
-      <Text style={styles.titleText}>{title}</Text>
+      <Text numberOfLines={2} ellipsizeMode="middle" style={styles.titleText}>
+        {title}
+      </Text>
 
       <View style={styles.imageContainer}>
         <View style={styles.ratingContainer}>
@@ -58,7 +62,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </View>
 
         <TouchableOpacity>
-          <Image source={images.ADDICON} />
+          {/* <Image source={images.ADDICON} /> */}
+          <AddIconSvg width={20} height={20} />
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -69,7 +74,7 @@ export default ProductCard;
 
 const styles = StyleSheet.create({
   card: {
-    // width: verticalScale(140),
+    width: verticalScale(140),
     height: verticalScale(165),
     backgroundColor: '#FFF',
     borderRadius: verticalScale(10),
@@ -99,5 +104,9 @@ const styles = StyleSheet.create({
 
   ratingText: {
     marginLeft: verticalScale(5),
+  },
+  productImage: {
+    width: verticalScale(80),
+    height: verticalScale(80),
   },
 });
