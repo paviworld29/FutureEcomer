@@ -1,3 +1,10 @@
+// ================= SVG IMPORTS =================
+export { default as StarOrange } from './StarOrange.svg'
+export {default as HeartSvg} from './HeartSvg.svg'
+export {default as AddIconSvg} from './AddIconSvg.svg'
+
+
+// ================= PNG =================
 export default {
   LOGO: require('./logo.png'),
   GOOGLELOGO: require('./google.png'),
