@@ -5,6 +5,7 @@ export {default as AddIconSvg} from './AddIconSvg.svg'
 export {default as HalfStarSvg} from './HalfStar.svg'
 export {default as EmptyStarSvg} from './EmptyStar.svg'
 export {default as BackICon} from './BackIcon.svg'
+export {default as BagICon} from './Bag.svg'
 
 
 // ================= PNG =================

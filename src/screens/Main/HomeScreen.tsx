@@ -23,7 +23,7 @@ import { useGetAllProductsQuery } from '../../redux/services/productApi';
 const HomeScreen = ({ navigation }: any) => {
   const tabBarHeight = useBottomTabBarHeight();
   const { data, error, isLoading } = useGetAllProductsQuery({});
-  console.log(data)
+  console.log(data);
 
   const [activeIcon, setActiveIcon] = useState<'grid' | 'list'>('grid');
   if (isLoading) {
@@ -105,7 +105,12 @@ const HomeScreen = ({ navigation }: any) => {
                 price={item.price}
                 rating={item.rating}
                 image={{ uri: item.thumbnail }}
-                onPress={() => navigation.navigate(navigationStrings.PRODUCT_DETAILS, { productId: item.id })}
+                onPress={() =>
+                  navigation.navigate(navigationStrings.PRODUCT_DETAILS, {
+                    productId: item.id,
+                    description: item.description,
+                  })
+                }
                 style={{
                   marginBottom: verticalScale(14),
                   width: '48%',

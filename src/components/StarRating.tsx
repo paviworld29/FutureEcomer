@@ -27,7 +27,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating = 0, size = 5 }) => {
           key={`full-${i}`}
           fill="#FF9300"
           width={size}
-          height={size} 
+          height={size}
         />
       ))}
       {calculatedStars.hasHalfStar && (
