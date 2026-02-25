@@ -20,13 +20,12 @@ import {
 } from '../../constants/Lang/navigationStrings';
 import { useGetAllProductsQuery } from '../../redux/services/productApi';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }: any) => {
   const tabBarHeight = useBottomTabBarHeight();
   const { data, error, isLoading } = useGetAllProductsQuery({});
-  
+  console.log(data)
 
   const [activeIcon, setActiveIcon] = useState<'grid' | 'list'>('grid');
-
   if (isLoading) {
     return (
       <SafeAreaView
@@ -59,13 +58,12 @@ const HomeScreen = () => {
           icon={images.SEARCHICON}
         />
 
-
         <View style={styles.topRightIcons}>
           <IconBox
             onPress={() => setActiveIcon('grid')}
             style={{
               backgroundColor:
-                activeIcon === 'grid' ? COLORS.PRIMARY : COLORS.LIGHT_GRAY,
+                activeIcon === 'grid' ? COLORS.GRAY : COLORS.LIGHT_GRAY,
             }}
           >
             <Text style={{ color: activeIcon === 'grid' ? '#FFF' : '#555' }}>
@@ -77,7 +75,7 @@ const HomeScreen = () => {
             onPress={() => setActiveIcon('list')}
             style={{
               backgroundColor:
-                activeIcon === 'list' ? COLORS.PRIMARY : COLORS.LIGHT_GRAY,
+                activeIcon === 'list' ? COLORS.GRAY : COLORS.LIGHT_GRAY,
             }}
           >
             <Text style={{ color: activeIcon === 'list' ? '#FFF' : '#555' }}>
@@ -85,7 +83,6 @@ const HomeScreen = () => {
             </Text>
           </IconBox>
         </View>
-
 
         <FlatList
           key={activeIcon}
@@ -99,9 +96,7 @@ const HomeScreen = () => {
             paddingBottom: tabBarHeight + 20,
           }}
           columnWrapperStyle={
-            activeIcon === 'grid'
-              ? { justifyContent: 'space-between' }
-              : undefined
+            activeIcon === 'grid' ? { justifyContent: 'space-between' } : null
           }
           renderItem={({ item }: any) =>
             activeIcon === 'grid' ? (
@@ -110,7 +105,7 @@ const HomeScreen = () => {
                 price={item.price}
                 rating={item.rating}
                 image={{ uri: item.thumbnail }}
-                onPress={() => console.log('Product Pressed')}
+                onPress={() => navigation.navigate(navigationStrings.PRODUCT_DETAILS, { productId: item.id })}
                 style={{
                   marginBottom: verticalScale(14),
                   width: '48%',

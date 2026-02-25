@@ -5,22 +5,29 @@ export const productApi = createApi({
   reducerPath: 'productApi',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: (headers) => {
-      headers.set('apikey', 'pixel');
+    prepareHeaders: headers => {
+      headers.set('apikey', 'pixel'); // globally added
       return headers;
     },
   }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getAllProducts: builder.query({
-  query: () => {
-    console.log('API call triggered'); // 👈 will show in Metro only when API is called
-    return {
-      url: 'task_api.php',
-      method: 'GET',
-    };
-  },
-}),
+      query: () => ({
+        url: 'task_api.php',
+        method: 'GET',
+      }),
+    }),
+    getProduct: builder.query({
+      query: (productId: string | number) => ({
+        url: 'task_api.php',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded', 
+        },
+        body: `product_id=${productId}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery } = productApi;
+export const { useGetAllProductsQuery, useGetProductQuery } = productApi;

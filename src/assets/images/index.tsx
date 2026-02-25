@@ -2,6 +2,9 @@
 export { default as StarOrange } from './StarOrange.svg'
 export {default as HeartSvg} from './HeartSvg.svg'
 export {default as AddIconSvg} from './AddIconSvg.svg'
+export {default as HalfStarSvg} from './HalfStar.svg'
+export {default as EmptyStarSvg} from './EmptyStar.svg'
+export {default as BackICon} from './BackIcon.svg'
 
 
 // ================= PNG =================
@@ -25,4 +28,5 @@ export default {
   CHAIRTWO: require('./ChairTwo.png'),
   SOFATWO: require('./SofaTwo.png'),
   SOFATHREE: require('./SofaThree.png'),
+
 };

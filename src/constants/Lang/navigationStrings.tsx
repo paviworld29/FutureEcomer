@@ -24,6 +24,7 @@ export const navigationStrings = {
   PROFILE: 'Profile',
   SETTINGS: 'Settings',
   SEARCH: 'Search',
+  PRODUCT_DETAILS: 'ProductDetails'
 };
 
 export const COLORS = {
