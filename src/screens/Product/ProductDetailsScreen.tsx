@@ -27,7 +27,7 @@ const ProductDetailsScreen = () => {
   const navigation = useNavigation();
   console.log(route);
 
-  const {  productId } = route.params;
+  const { productId } = route.params;
 
   const { data, isLoading } = useGetProductQuery(productId);
 
@@ -61,7 +61,6 @@ const ProductDetailsScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* ================= TOP HALF ================= */}
       <View style={styles.topHalf}>
         <TouchableOpacity
           style={styles.backButton}
@@ -87,7 +86,6 @@ const ProductDetailsScreen = () => {
           )}
         />
 
-        {/* Pagination */}
         <View style={styles.paginationContainer}>
           {product.images.map((_, index) => (
             <View
@@ -98,10 +96,8 @@ const ProductDetailsScreen = () => {
         </View>
       </View>
 
-      {/* ================= BOTTOM HALF ================= */}
       <View style={styles.bottomHalf}>
         <View style={{ marginHorizontal: 30 }}>
-          {/* Brand + Price */}
           <View style={styles.topRow}>
             <View>
               <Text style={styles.title}>{product.brand}</Text>
@@ -114,7 +110,6 @@ const ProductDetailsScreen = () => {
             </View>
           </View>
 
-          {/* Quantity */}
           <View style={styles.quantityRow}>
             <TouchableOpacity style={styles.stepBtn} onPress={decrease}>
               <Text style={styles.stepText}>-</Text>
@@ -127,18 +122,15 @@ const ProductDetailsScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Description */}
           <Text style={styles.descriptionTitle}>{product.title}</Text>
           <Text style={styles.description}>{product.description}</Text>
 
-          {/* Bottom Buttons */}
           <View style={styles.bottomRow}>
             <TouchableOpacity>
-                <View style={styles.cartCircle}>
-              <BagICon height={25} width={30} />
-            </View>
+              <View style={styles.cartCircle}>
+                <BagICon height={25} width={30} />
+              </View>
             </TouchableOpacity>
-
 
             <TouchableOpacity style={styles.buyButton}>
               <Text style={styles.buyText}>Buy Now</Text>

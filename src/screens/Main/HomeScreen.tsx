@@ -108,7 +108,7 @@ const HomeScreen = ({ navigation }: any) => {
                 onPress={() =>
                   navigation.navigate(navigationStrings.PRODUCT_DETAILS, {
                     productId: item.id,
-                    description: item.description,
+
                   })
                 }
                 style={{
