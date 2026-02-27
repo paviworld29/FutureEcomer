@@ -1,153 +1,115 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
-  TextInput,
+  View,
   FlatList,
-  Image,
+  Text,
   TouchableOpacity,
 } from 'react-native';
-import images from '../../assets/images';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LikesCard from '../../components/LikesCard';
+import { navigationStrings } from '../../constants/Lang/navigationStrings';
 
-const DATA = [
-  { id: '1', title: 'Three layered Drawer', price: 5500, rating: 4.5 },
-  { id: '2', title: 'Three layered Drawer', price: 5500, rating: 4.5 },
-  { id: '3', title: 'Three layered Drawer', price: 5500, rating: 4.5 },
-  { id: '4', title: 'Three layered Drawer', price: 5500, rating: 4.5 },
-  { id: '5', title: 'Three layered Drawer', price: 5500, rating: 4.5 },
-  { id: '6', title: 'Three layered Drawer', price: 5500, rating: 4.5 },
-];
+const LikesScreen = ({ navigation }: any) => {
+  const [likedItems, setLikedItems] = useState<any[]>([]);
 
-const HomeScreen = () => {
-  const renderItem = ({ item }: any) => (
-    <View style={styles.card}>
-      <View style={styles.ratingRow}>
-        <Text style={styles.rating}>⭐ {item.rating}</Text>
-        <Text style={styles.heart}>♡</Text>
-      </View>
+  // 🔹 Fetch liked items
+  useEffect(() => {
+    const getLikedItems = async () => {
+      try {
+        const stored = await AsyncStorage.getItem('liked_products');
+        const parsed = stored ? JSON.parse(stored) : [];
+        console.log('geqhjdfbeqwhjbe', parsed);
+        setLikedItems(parsed);
+      } catch (error) {
+        console.log('Error fetching liked items', error);
+      }
+    };
 
-      <Image
-        source={images.HOMEICON}
-        style={styles.image}
-        resizeMode="contain"
+    const unsubscribe = navigation.addListener('focus', () => {
+      getLikedItems();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
+  // 🔹 Remove Like
+  const handleUnlike = async (id: string) => {
+    try {
+      const updated = likedItems.filter(item => item.id !== id);
+      setLikedItems(updated);
+      await AsyncStorage.setItem('liked_products', JSON.stringify(updated));
+    } catch (error) {
+      console.log('Error removing like', error);
+    }
+  };
+
+  // 🔹 Empty State
+  if (likedItems.length === 0) {
+    return (
+      <LikesCard
+        title="No liked items"
+        header="My Likes"
+        buttonText="Start Shopping"
+        onPress={() => navigation.navigate(navigationStrings.HOME)}
       />
+    );
+  }
 
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.price}>₱ {item.price}.00</Text>
+  // 🔹 Render Each Item
+  const renderItem = ({ item }: any) => {
+    return (
+      <View style={styles.card}>
+        <Text style={styles.title}>{item.title}</Text>
 
-      <TouchableOpacity style={styles.addBtn}>
-        <Text style={styles.plus}>+</Text>
-      </TouchableOpacity>
-    </View>
-  );
+        <TouchableOpacity
+          style={styles.unlikeBtn}
+          onPress={() => handleUnlike(item.id)}
+        >
+          <Text style={styles.unlikeText}>Remove</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Explore</Text>
-
-      {/* Search + Icons Row */}
-      <View style={styles.searchRow}>
-        <TextInput
-          placeholder="Search"
-          style={styles.searchInput}
-        />
-        <View style={styles.iconBox}>
-          <Text>⚙️</Text>
-        </View>
-        <View style={styles.iconBox}>
-          <Text>☷</Text>
-        </View>
-      </View>
-
       <FlatList
-        data={DATA}
+        data={likedItems}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
         showsVerticalScrollIndicator={false}
       />
     </View>
   );
 };
 
-export default HomeScreen;
+export default LikesScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E5E8E8',
     padding: 16,
-  },
-  header: {
-    fontSize: 22,
-    fontWeight: '600',
-    marginBottom: 12,
-  },
-  searchRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  searchInput: {
-    flex: 1,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    height: 45,
-    marginRight: 10,
-  },
-  iconBox: {
-    width: 40,
-    height: 45,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 6,
   },
   card: {
     backgroundColor: '#fff',
-    width: '48%',
-    borderRadius: 16,
-    padding: 10,
-    marginBottom: 16,
-  },
-  ratingRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  rating: {
-    fontSize: 12,
-  },
-  heart: {
-    fontSize: 16,
-    color: '#888',
-  },
-  image: {
-    height: 100,
-    marginVertical: 10,
+    padding: 16,
+    borderRadius: 10,
+    marginBottom: 12,
+    elevation: 3,
   },
   title: {
-    fontSize: 13,
-  },
-  price: {
+    fontSize: 16,
     fontWeight: '600',
-    marginTop: 4,
   },
-  addBtn: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    backgroundColor: '#F1C40F',
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
+  unlikeBtn: {
+    marginTop: 10,
+    backgroundColor: '#ff4d4d',
+    padding: 8,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
   },
-  plus: {
-    fontWeight: 'bold',
+  unlikeText: {
+    color: '#fff',
+    fontSize: 14,
   },
 });

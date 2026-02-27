@@ -101,7 +101,9 @@ const HomeScreen = ({ navigation }: any) => {
           renderItem={({ item }: any) =>
             activeIcon === 'grid' ? (
               <ProductCard
+              item = {item}
                 title={item.title}
+                productId={item.id} 
                 price={item.price}
                 rating={item.rating}
                 image={{ uri: item.thumbnail }}

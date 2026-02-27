@@ -4,6 +4,7 @@ import ProductDetailsScreen from '../screens/Product/ProductDetailsScreen';
 import HomeScreen from '../screens/Main/HomeScreen';
 import BagScreen from '../screens/Main/BagScreen';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -18,7 +19,8 @@ export default function AppNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
-      <Stack.Screen name="Bag" component={BagScreen} />
+     
+
     </Stack.Navigator>
   );
 }

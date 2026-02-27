@@ -6,7 +6,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: headers => {
-      headers.set('apikey', 'pixel'); // globally added
+      headers.set('apikey', 'pixel'); 
       return headers;
     },
   }),
@@ -22,7 +22,7 @@ export const productApi = createApi({
         url: 'task_api.php',
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded', 
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: `product_id=${productId}`,
       }),
