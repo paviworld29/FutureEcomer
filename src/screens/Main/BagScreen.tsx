@@ -106,7 +106,22 @@ const BagScreen = () => {
           </View>
         </>
       ) : (
-        <Text style={styles.emptyText}>No Product in Bag</Text>
+        // <Text style={styles.emptyText}>No Product in Bag</Text>
+        // <TouchableOpacity>
+
+        // </TouchableOpacity>
+
+        <View style={[styles.emptyText]}>
+          <Text>No product in Bag</Text>
+          <TouchableOpacity
+                onPress={()=>navigation.navigate(navigationStrings.HOME)}
+
+          style={styles.addButton}>
+            <Text style={styles.addButtonText}>
+            Add product
+            </Text>
+          </TouchableOpacity>
+        </View>
       )}
     </SafeAreaView>
   );
@@ -166,7 +181,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+ addButton: {
+    backgroundColor: '#53a20e', // green button
+    paddingVertical: 12,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 3,           // Android shadow
+    shadowColor: '#000',    // iOS shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    marginVertical: 10,     // spacing from other elements
+  },
+  addButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
   stepText: {
     fontSize: 18,
     fontWeight: '600',
@@ -251,10 +284,12 @@ const styles = StyleSheet.create({
   },
 
   emptyText: {
-    textAlign: 'center',
+
     marginTop: 40,
     fontSize: 16,
     color: COLORS.BLACK,
+
+    alignItems:'center'
   },
 });
 
