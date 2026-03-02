@@ -12,8 +12,10 @@ import { ImageSourcePropType } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import images, { AddIconSvg, HeartSvg, StarOrange } from '../assets/images';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
+import { navigationStrings } from '../constants/Lang/navigationStrings';
+
 interface Product {
   id: number;
   title: string;
@@ -42,9 +44,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
   style,
   item,
 }) => {
+
+  const navigaton = useNavigation();
   const [liked, setLiked] = useState(false);
 
-  // 🔥 Check if already liked on mount
+
  useFocusEffect(
   useCallback(() => {
     const checkLiked = async () => {
@@ -62,7 +66,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }, [item.id])
 );
 
-  // 🔥 Handle Like / Unlike
   const handleLike = async () => {
     try {
       const stored = await AsyncStorage.getItem('liked_products');
@@ -71,11 +74,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
       const alreadyLiked = likedArray.some(product => product.id === item.id);
 
       if (alreadyLiked) {
-        // ❌ Remove product
+
         likedArray = likedArray.filter(product => product.id !== item.id);
         setLiked(false);
       } else {
-        // ✅ Add full product object
         likedArray.push(item);
         setLiked(true);
       }
@@ -119,7 +121,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Text style={styles.ratingText}>{price}</Text>
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+    //  onPress={()=>navigaton.navigate(navigationStrings.BAG)}
+        >
+
+
           <AddIconSvg width={20} height={20} />
         </TouchableOpacity>
       </View>

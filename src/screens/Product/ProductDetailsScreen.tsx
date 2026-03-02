@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { BackICon, BagICon } from '../../assets/images';
-import { COLORS } from '../../constants/Lang/navigationStrings';
+import { COLORS, navigationStrings } from '../../constants/Lang/navigationStrings';
 import { useGetProductQuery } from '../../redux/services/productApi';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -24,7 +24,7 @@ interface Product {
 
 const ProductDetailsScreen = () => {
   const route = useRoute<any>();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   console.log(route);
 
   const { productId } = route.params;
@@ -132,9 +132,20 @@ const ProductDetailsScreen = () => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.buyButton}>
-              <Text style={styles.buyText}>Buy Now</Text>
-            </TouchableOpacity>
+      <TouchableOpacity
+  style={styles.buyButton}
+  onPress={() =>
+    navigation.navigate("Tabs", {
+      screen: navigationStrings.BAG,
+      params: {
+        product: product,
+        quantity: quantity,
+      },
+    })
+  }
+>
+  <Text>Buy Now</Text>
+</TouchableOpacity>
           </View>
         </View>
       </View>

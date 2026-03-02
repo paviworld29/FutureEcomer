@@ -1,19 +1,261 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, navigationStrings } from '../../constants/Lang/navigationStrings';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const BagScreen = () => {
-  let navigation = useNavigation();
+  const navigation = useNavigation<any>()
+  const route = useRoute<any>();
+  const { product: initialProduct, quantity: initialQty } =
+    route.params || {};
+
+  const [product, setProduct] = useState(initialProduct);
+  const [quantity, setQuantity] = useState<number>(initialQty || 1);
+
+  const increase = () => {
+    setQuantity(prev => prev + 1);
+  };
+
+  const decrease = () => {
+    setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  };
+
+  const handleRemove = () => {
+    setProduct(null);
+  };
+
+  const subtotal = product ? product.price * quantity : 0;
+  const shipping = product ? 50 : 0;
+  const total = subtotal + shipping;
+
   return (
-    <View style={{ marginTop: 100 }}>
-      <Text>BagScreen</Text>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text>BACK</Text>
-      </TouchableOpacity>
-    </View>
+
+
+    <SafeAreaView style={styles.container}>
+      {product ? (
+        <>
+          {/* Product Card */}
+          <View style={styles.cardView}>
+            <Image
+              source={{ uri: product.images?.[0] }}
+              style={styles.productImage}
+            />
+
+            <View style={styles.detailsContainer}>
+              <Text style={styles.title}>{product.title}</Text>
+
+              <Text style={styles.price}>₹ {product.price}</Text>
+
+              {/* Quantity Buttons */}
+              <View style={styles.quantityRow}>
+                <TouchableOpacity style={styles.stepBtn} onPress={decrease}>
+                  <Text style={styles.stepText}>-</Text>
+                </TouchableOpacity>
+
+                <Text style={styles.quantity}>{quantity}</Text>
+
+                <TouchableOpacity style={styles.stepBtn} onPress={increase}>
+                  <Text style={styles.stepText}>+</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* Remove Button */}
+              <TouchableOpacity
+                style={styles.removeButton}
+                onPress={handleRemove}
+              >
+                <Text style={styles.removeButtonText}>Remove</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Summary Section */}
+          <View style={styles.summaryContainer}>
+            <View style={styles.row}>
+              <Text style={styles.label}>Subtotal</Text>
+              <Text style={styles.value}>₹ {subtotal}</Text>
+            </View>
+
+            <View style={styles.row}>
+              <Text style={styles.label}>Shipping</Text>
+              <Text style={styles.value}>₹ {shipping}</Text>
+            </View>
+
+            <View style={styles.divider} />
+
+            <View style={styles.row}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalValue}>₹ {total}</Text>
+            </View>
+
+            <TouchableOpacity style={styles.checkoutButton}
+             onPress={()=>{
+              navigation.navigate('PlaceOrder')
+             }}>
+              <Text style={styles.checkoutText}>
+                Proceed To Checkout
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : (
+        <Text style={styles.emptyText}>No Product in Bag</Text>
+      )}
+    </SafeAreaView>
   );
 };
 
-export default BagScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.LIGHT_GRAY,
+  },
 
-const styles = StyleSheet.create({});
+  cardView: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.WHITE,
+    margin: 20,
+    padding: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+    elevation: 3,
+  },
+
+  productImage: {
+    width: 90,
+    height: 90,
+    borderRadius: 10,
+  },
+
+  detailsContainer: {
+    flex: 1,
+    marginLeft: 15,
+  },
+
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: COLORS.BLACK,
+  },
+
+  price: {
+    marginTop: 6,
+    fontSize: 15,
+    fontWeight: '700',
+    color: 'green',
+  },
+
+  quantityRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+
+  stepBtn: {
+    width: 30,
+    height: 30,
+    borderRadius: 6,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  stepText: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
+
+  quantity: {
+    marginHorizontal: 15,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  removeButton: {
+    marginTop: 10,
+    backgroundColor: '#E53935',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
+  },
+
+  removeButtonText: {
+    color: 'white',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+
+  summaryContainer: {
+    backgroundColor: COLORS.WHITE,
+    marginHorizontal: 20,
+    padding: 20,
+    borderRadius: 12,
+    elevation: 3,
+  },
+
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 6,
+  },
+
+  label: {
+    fontSize: 14,
+    color: COLORS.BLACK,
+  },
+
+  value: {
+    fontSize: 14,
+    color: COLORS.BLACK,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: '#ddd',
+    marginVertical: 10,
+  },
+
+  totalLabel: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: COLORS.BLACK,
+  },
+
+  totalValue: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: 'green',
+  },
+
+  checkoutButton: {
+    marginTop: 20,
+    backgroundColor: 'black',
+    height: 50,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  checkoutText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: 'white',
+  },
+
+  emptyText: {
+    textAlign: 'center',
+    marginTop: 40,
+    fontSize: 16,
+    color: COLORS.BLACK,
+  },
+});
+
+export default BagScreen;

@@ -3,6 +3,7 @@ import TabNavigator from './TabNavigator';
 import ProductDetailsScreen from '../screens/Product/ProductDetailsScreen';
 import HomeScreen from '../screens/Main/HomeScreen';
 import BagScreen from '../screens/Main/BagScreen';
+import OrderSuccessScreen from '../screens/Product/OrderSuccessScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +20,8 @@ export default function AppNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
-     
+      <Stack.Screen name="PlaceOrder" component={OrderSuccessScreen} />
+
 
     </Stack.Navigator>
   );

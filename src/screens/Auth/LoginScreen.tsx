@@ -20,6 +20,14 @@ const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [remember, setRemember] = useState(false);
 
+  const [email,setEmail] = useState(false)
+  const [password,setPassword] = useState(false)
+  const [error,setError] = useState(false)
+
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
   return (
     <GradientWrapper>
       <SafeAreaView style={styles.safeArea}>
@@ -57,7 +65,9 @@ const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
             </TouchableOpacity>
           </View>
 
-          <PrimaryButton title={navigationStrings.LOGIN} />
+          <PrimaryButton
+          //  onPress={()=>navigation.navigate('HOME')}
+            title={navigationStrings.LOGIN} />
 
           <Text style={styles.orText}>{navigationStrings.OR}</Text>
 

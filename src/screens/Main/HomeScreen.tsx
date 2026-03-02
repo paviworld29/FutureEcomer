@@ -103,7 +103,7 @@ const HomeScreen = ({ navigation }: any) => {
               <ProductCard
               item = {item}
                 title={item.title}
-                productId={item.id} 
+                productId={item.id}
                 price={item.price}
                 rating={item.rating}
                 image={{ uri: item.thumbnail }}
