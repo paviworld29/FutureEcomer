@@ -12,15 +12,19 @@ interface PrimaryButtonProps {
   title: string;
   onPress?: (event: GestureResponderEvent) => void;
   style?: object;
+   disabled?: boolean;
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   title,
   onPress,
   style,
+  disabled = false,
+
 }) => {
   return (
     <TouchableOpacity
+    disabled={disabled}
       activeOpacity={0.8}
       style={[styles.buttonWrapper, style]}
       onPress={onPress}

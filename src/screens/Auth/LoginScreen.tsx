@@ -1,32 +1,87 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import images from '../../assets/images';
 import CustomInput from '../../components/CustomInput';
 import GradientWrapper from '../../components/GradientWrapper';
 import PrimaryButton from '../../components/PrimaryButton';
 import SocialButton from '../../components/SocialButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   COLORS,
   navigationStrings,
 } from '../../constants/Lang/navigationStrings';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { useLoginMutation } from '../../redux/services/authApi';
 
 
-const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
 
+const LoginScreen = () => {
+  const [login, { isLoading }] = useLoginMutation();
+  const navigation = useNavigation<any>();
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [remember, setRemember] = useState(false);
-
-  const [email,setEmail] = useState(false)
-  const [password,setPassword] = useState(false)
-  const [error,setError] = useState(false)
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const validate = (): boolean => {
+    if (email.trim() === '') {
+      Alert.alert('Email is required');
+      return false;
+    }
 
+    if (!email.includes('@')) {
+      Alert.alert('Email must contain @');
+      return false;
+    }
+
+    if (password.trim() === '') {
+      Alert.alert('Password required');
+      return false;
+    }
+
+    if (password.length < 6) {
+      Alert.alert('Password must be at least 6 characters');
+      return false;
+    }
+
+    return true;
+  };
+
+
+  const handleLogin = async () => {
+    const isValid = validate();
+    if (!isValid) return;
+
+    try {
+      const response = await login({
+        email,
+        password,
+      }).unwrap();
+
+      const token = response?.token;
+
+      if (token) {
+        await AsyncStorage.setItem('userToken', token);
+        // Alert.alert('Login Success');
+        // navigation.replace('Tabs');
+      } else {
+        Alert.alert('Token not received');
+      }
+    } catch (error: any) {
+      Alert.alert(error?.data?.message || 'Login Failed');
+    }
+  };
 
   return (
     <GradientWrapper>
@@ -39,9 +94,15 @@ const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
           <Text style={styles.title}>{navigationStrings.TITLE}</Text>
           <Text style={styles.subtitle}>{navigationStrings.SUBTITLE}</Text>
 
-          <CustomInput placeholder={navigationStrings.EMAIL_PLACEHOLDER} />
+          <CustomInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder={navigationStrings.EMAIL_PLACEHOLDER}
+          />
 
           <CustomInput
+            value={password}
+            onChangeText={setPassword}
             placeholder={navigationStrings.PASSWORD_PLACEHOLDER}
             secureTextEntry={!passwordVisible}
             rightIcon={passwordVisible ? images.EYEON : images.EYESOFF}
@@ -54,20 +115,33 @@ const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
               onPress={() => setRemember(!remember)}
               activeOpacity={0.8}
             >
-              <View style={[styles.checkbox, remember ? styles.checkedBox:null]}>
-                {remember ? <Text style={styles.checkMark}>✓</Text>:null}
+              <View
+                style={[
+                  styles.checkbox,
+                  remember ? styles.checkedBox : null,
+                ]}
+              >
+                {remember ? (
+                  <Text style={styles.checkMark}>✓</Text>
+                ) : null}
               </View>
-              <Text style={styles.remember}>{navigationStrings.REMEMBER}</Text>
+              <Text style={styles.remember}>
+                {navigationStrings.REMEMBER}
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <Text style={styles.forgot}>{navigationStrings.FORGOT}</Text>
+              <Text style={styles.forgot}>
+                {navigationStrings.FORGOT}
+              </Text>
             </TouchableOpacity>
           </View>
 
           <PrimaryButton
-          //  onPress={()=>navigation.navigate('HOME')}
-            title={navigationStrings.LOGIN} />
+            onPress={handleLogin}
+            title={navigationStrings.LOGIN}
+            disabled={isLoading}
+          />
 
           <Text style={styles.orText}>{navigationStrings.OR}</Text>
 
@@ -75,6 +149,7 @@ const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
             title={navigationStrings.GOOGLE}
             icon={images.GOOGLELOGO}
           />
+
           <SocialButton
             title={navigationStrings.FACEBOOK}
             icon={images.FACEBOOKLOGO}
@@ -84,8 +159,14 @@ const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
             <Text style={styles.signupQuestion}>
               {navigationStrings.SIGNUP_QUESTION}{' '}
             </Text>
-            <TouchableOpacity onPress={()=>navigation.navigate(navigationStrings.SIGNUP)}>
-              <Text style={styles.signup}>{navigationStrings.SIGNUP}</Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(navigationStrings.SIGNUP)
+              }
+            >
+              <Text style={styles.signup}>
+                {navigationStrings.SIGNUP}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -94,10 +175,11 @@ const LoginScreen = ({navigation}: NativeStackScreenProps<any>) => {
   );
 };
 
+export default LoginScreen;
+
+// ✅ Styles Outside Component (Best Practice)
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
+  safeArea: { flex: 1 },
 
   innerContainer: {
     flex: 1,
@@ -189,5 +271,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-export default LoginScreen;

@@ -26,6 +26,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   onRightPress,
   value,
   onChangeText,
+ 
 }) => {
   return (
     <View style={styles.container}>
