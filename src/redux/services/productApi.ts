@@ -6,7 +6,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: headers => {
-      headers.set('apikey', 'pixel'); 
+      headers.set('apikey', 'pixel');
       return headers;
     },
   }),

@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
   GestureResponderEvent,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import { COLORS } from '../constants/Lang/navigationStrings';
@@ -12,7 +12,7 @@ interface PrimaryButtonProps {
   title: string;
   onPress?: (event: GestureResponderEvent) => void;
   style?: object;
-   disabled?: boolean;
+  disabled?: boolean;
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
@@ -20,11 +20,10 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   onPress,
   style,
   disabled = false,
-
 }) => {
   return (
     <TouchableOpacity
-    disabled={disabled}
+      disabled={disabled}
       activeOpacity={0.8}
       style={[styles.buttonWrapper, style]}
       onPress={onPress}

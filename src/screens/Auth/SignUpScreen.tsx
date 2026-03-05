@@ -1,3 +1,4 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -6,13 +7,12 @@ import images from '../../assets/images';
 import CustomInput from '../../components/CustomInput';
 import GradientWrapper from '../../components/GradientWrapper';
 import PrimaryButton from '../../components/PrimaryButton';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import {
   COLORS,
   navigationStrings,
 } from '../../constants/Lang/navigationStrings';
-const SignUpScreen = ({navigation}:NativeStackScreenProps<any>) => {
+const SignUpScreen = ({ navigation }: NativeStackScreenProps<any>) => {
   const [passwordVisible, setPasswordVisible] = React.useState(false);
 
   return (
@@ -37,7 +37,9 @@ const SignUpScreen = ({navigation}:NativeStackScreenProps<any>) => {
             <Text style={styles.signupText}>
               {navigationStrings.ALREADY_HAVE_ACCOUNT}{' '}
             </Text>
-            <TouchableOpacity onPress={() => navigation.navigate(navigationStrings.LOGIN)}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(navigationStrings.LOGIN)}
+            >
               <Text style={styles.loginText}>{navigationStrings.LOGIN}</Text>
             </TouchableOpacity>
           </View>

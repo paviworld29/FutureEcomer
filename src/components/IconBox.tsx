@@ -1,10 +1,15 @@
-import React from 'react'
-import { StyleSheet, TouchableOpacity, ViewStyle, StyleProp } from 'react-native'
+import React from 'react';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  ViewStyle,
+} from 'react-native';
 
 interface IconBoxProps {
-  children: React.ReactNode
-  onPress?: () => void
-  style?: StyleProp<ViewStyle>
+  children: React.ReactNode;
+  onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
 }
 
 const IconBox: React.FC<IconBoxProps> = ({ children, onPress, style }) => {
@@ -16,14 +21,13 @@ const IconBox: React.FC<IconBoxProps> = ({ children, onPress, style }) => {
     >
       {children}
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default IconBox
+export default IconBox;
 
 const styles = StyleSheet.create({
   container: {
-
     width: 30,
     height: 30,
     borderRadius: 10,
@@ -32,4 +36,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
   },
-})
+});

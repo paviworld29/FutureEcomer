@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { productApi } from '../services/productApi';
 import { authApi } from '../services/authApi';
+import authReducer from '../services/authSlice';
 
 export const store = configureStore({
   reducer: {
+    auth: authReducer,
     [productApi.reducerPath]: productApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
   },
@@ -11,5 +13,5 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(productApi.middleware,authApi.middleware ),
+    }).concat(productApi.middleware, authApi.middleware),
 });

@@ -1,3 +1,5 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
   Alert,
@@ -8,23 +10,23 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
+import Toast from 'react-native-toast-message';
+import { useDispatch } from 'react-redux';
 import images from '../../assets/images';
 import CustomInput from '../../components/CustomInput';
 import GradientWrapper from '../../components/GradientWrapper';
 import PrimaryButton from '../../components/PrimaryButton';
 import SocialButton from '../../components/SocialButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   COLORS,
   navigationStrings,
 } from '../../constants/Lang/navigationStrings';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
-import { useNavigation } from '@react-navigation/native';
 import { useLoginMutation } from '../../redux/services/authApi';
-
-
+import { setToken } from '../../redux/services/authSlice';
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
   const navigation = useNavigation<any>();
 
@@ -32,7 +34,6 @@ const LoginScreen = () => {
   const [remember, setRemember] = useState(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
 
   const validate = (): boolean => {
     if (email.trim() === '') {
@@ -58,7 +59,6 @@ const LoginScreen = () => {
     return true;
   };
 
-
   const handleLogin = async () => {
     const isValid = validate();
     if (!isValid) return;
@@ -68,13 +68,18 @@ const LoginScreen = () => {
         email,
         password,
       }).unwrap();
+      console.log('Login Response:', response);
 
       const token = response?.token;
 
       if (token) {
         await AsyncStorage.setItem('userToken', token);
-        // Alert.alert('Login Success');
-        // navigation.replace('Tabs');
+        dispatch(setToken(token));
+        Toast.show({
+          text1: 'Login Successful 🎉',
+          position: 'bottom',
+          visibilityTime: 2000,
+        });
       } else {
         Alert.alert('Token not received');
       }
@@ -116,24 +121,15 @@ const LoginScreen = () => {
               activeOpacity={0.8}
             >
               <View
-                style={[
-                  styles.checkbox,
-                  remember ? styles.checkedBox : null,
-                ]}
+                style={[styles.checkbox, remember ? styles.checkedBox : null]}
               >
-                {remember ? (
-                  <Text style={styles.checkMark}>✓</Text>
-                ) : null}
+                {remember ? <Text style={styles.checkMark}>✓</Text> : null}
               </View>
-              <Text style={styles.remember}>
-                {navigationStrings.REMEMBER}
-              </Text>
+              <Text style={styles.remember}>{navigationStrings.REMEMBER}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <Text style={styles.forgot}>
-                {navigationStrings.FORGOT}
-              </Text>
+              <Text style={styles.forgot}>{navigationStrings.FORGOT}</Text>
             </TouchableOpacity>
           </View>
 
@@ -160,13 +156,9 @@ const LoginScreen = () => {
               {navigationStrings.SIGNUP_QUESTION}{' '}
             </Text>
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate(navigationStrings.SIGNUP)
-              }
+              onPress={() => navigation.navigate(navigationStrings.SIGNUP)}
             >
-              <Text style={styles.signup}>
-                {navigationStrings.SIGNUP}
-              </Text>
+              <Text style={styles.signup}>{navigationStrings.SIGNUP}</Text>
             </TouchableOpacity>
           </View>
         </View>

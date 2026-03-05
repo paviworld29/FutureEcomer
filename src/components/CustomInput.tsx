@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-
 interface CustomInputProps {
   placeholder?: string;
   secureTextEntry?: boolean;
@@ -26,7 +25,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
   onRightPress,
   value,
   onChangeText,
- 
 }) => {
   return (
     <View style={styles.container}>
@@ -48,7 +46,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
 };
 
 export default CustomInput;
-
 
 const styles = StyleSheet.create({
   container: {

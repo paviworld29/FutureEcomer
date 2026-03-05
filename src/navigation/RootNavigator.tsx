@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector, useDispatch } from 'react-redux';
+import  {setToken}  from '../redux/services/authSlice';
 
 export default function RootNavigator() {
-  const [userToken, setUserToken] = useState<string | null>(null);
-  console.log(userToken,'tokennn')
-  const [loading, setLoading] = useState(true);
+
+  const token = useSelector((state:any) => state.auth.token);
+  const dispatch = useDispatch();
+  
 
   useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem('userToken');
-      console.log(token,'dksfjkldjf')
-      setUserToken(token);
-      setLoading(false);
+    const loadToken = async () => {
+      const storedToken = await AsyncStorage.getItem('userToken');
+
+      if (storedToken) {
+        dispatch(setToken(storedToken));
+      }
     };
 
-    checkToken();
+    loadToken();
   }, []);
-  if (loading) return null;
+
   return (
     <NavigationContainer>
-      {userToken ? <AppNavigator /> : <AuthNavigator />}
+      {token ? <AppNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }

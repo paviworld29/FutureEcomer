@@ -1,34 +1,67 @@
-import React from "react";
+import React from 'react';
 import {
-  View,
-  Text,
+  Image,
+  ScrollView,
   StyleSheet,
-  Alert,
+  Text,
   TouchableOpacity,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
-import { moderateScale, verticalScale } from "react-native-size-matters";
-import { navigationStrings } from "../../constants/Lang/navigationStrings";
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import images from '../../assets/images';
+import { COLORS } from '../../constants/Lang/navigationStrings';
 
 const ProfileScreen = () => {
-  const navigation = useNavigation<any>();
-
- const handleLogout = async () => {
-  await AsyncStorage.removeItem("userToken");
-  navigation.replace(navigationStrings.LOGIN);   // ⚠️ name sahi hona chahiye
-};
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.name}>John Doe</Text>
-        <Text style={styles.email}>john@example.com</Text>
-      </View>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.header}>
+          <Image source={images.SOFAIMG} style={styles.avatar} />
 
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
+          <Text style={styles.name}>John Doe</Text>
+          <Text style={styles.email}>john.doe@email.com</Text>
+
+          <TouchableOpacity style={styles.editBtn}>
+            <Text style={styles.editText}>Edit Profile</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Personal Info</Text>
+
+          <View style={styles.item}>
+            <Text style={styles.label}>Phone</Text>
+            <Text style={styles.value}>+91 9876543210</Text>
+          </View>
+
+          <View style={styles.item}>
+            <Text style={styles.label}>Location</Text>
+            <Text style={styles.value}>India</Text>
+          </View>
+
+          <View style={styles.item}>
+            <Text style={styles.label}>Member Since</Text>
+            <Text style={styles.value}>Jan 2024</Text>
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Account</Text>
+
+          <View style={styles.item}>
+            <Text style={styles.label}>Subscription</Text>
+            <Text style={styles.value}>Premium</Text>
+          </View>
+
+          <View style={styles.item}>
+            <Text style={styles.label}>Status</Text>
+            <Text style={styles.value}>Active</Text>
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -36,32 +69,74 @@ const ProfileScreen = () => {
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    padding: moderateScale(20),
-    justifyContent: "space-between",
+    backgroundColor: COLORS.LIGHT_GRAY,
   },
-  card: {
-    marginTop: verticalScale(40),
+  container: {
+    // paddingBottom: 30,
+  },
+  header: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingVertical: 30,
+    // marginBottom: 20,
+    borderRadius: 20,
+    margin: 20,
+  },
+  avatar: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    // marginBottom: 10,
   },
   name: {
-    fontSize: moderateScale(22),
-    fontWeight: "bold",
+    fontSize: 22,
+    fontWeight: 'bold',
   },
   email: {
-    fontSize: moderateScale(16),
-    marginTop: verticalScale(5),
-    color: "gray",
+    fontSize: 14,
+    color: '#777',
+    marginBottom: 15,
   },
-  logoutButton: {
-    backgroundColor: "#FF3B30",
-    padding: moderateScale(15),
-    borderRadius: moderateScale(8),
-    alignItems: "center",
+  editBtn: {
+    backgroundColor: '#007bff',
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 6,
   },
-  logoutText: {
-    color: "white",
-    fontSize: moderateScale(16),
-    fontWeight: "600",
+  editText: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  section: {
+    backgroundColor: '#fff',
+    paddingVertical: 10,
+    // marginBottom: 20,
+    margin: 20,
+    borderRadius: 20,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginHorizontal: 20,
+    marginBottom: 10,
+    color: '#666',
+  },
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+  },
+  label: {
+    fontSize: 15,
+    color: '#333',
+  },
+  value: {
+    fontSize: 15,
+    color: '#666',
   },
 });

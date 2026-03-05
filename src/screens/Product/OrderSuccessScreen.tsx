@@ -1,23 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { navigationStrings } from '../../constants/Lang/navigationStrings';
 
-const OrderSuccessScreen = ({ route }:any) => {
+const OrderSuccessScreen = ({ route }: any) => {
   const navigation = useNavigation<any>();
 
   // Optionally, you can pass order details via route.params
   const { orderId, totalAmount } = route.params || {};
 
   const handleGoHome = () => {
-
-       navigation.navigate("Tabs", {
-         screen: navigationStrings.HOME,
-
-         },
-
-        )
+    navigation.navigate('Tabs', {
+      screen: navigationStrings.HOME,
+    });
   };
 
   return (
@@ -33,9 +29,7 @@ const OrderSuccessScreen = ({ route }:any) => {
 
         {/* Success Text */}
         <Text style={styles.title}>Order Placed Successfully!</Text>
-        <Text style={styles.subtitle}>
-          Thank you for your purchase.
-        </Text>
+        <Text style={styles.subtitle}>Thank you for your purchase.</Text>
 
         {/* Order Details */}
         {orderId && totalAmount && (

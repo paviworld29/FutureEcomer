@@ -1,15 +1,15 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
 
-import HomeScreen from '../screens/Main/HomeScreen';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 import BagScreen from '../screens/Main/BagScreen';
-import SettingsScreen from '../screens/Main/SettingsScreen';
+import HomeScreen from '../screens/Main/HomeScreen';
 import LikesScreen from '../screens/Main/LikesScreen';
 import ProfileScreen from '../screens/Main/ProfileScreen';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import SettingsScreen from '../screens/Main/SettingsScreen';
 
-import { COLORS, navigationStrings } from '../constants/Lang/navigationStrings';
 import images from '../assets/images';
+import { COLORS, navigationStrings } from '../constants/Lang/navigationStrings';
 
 const Tab = createBottomTabNavigator();
 

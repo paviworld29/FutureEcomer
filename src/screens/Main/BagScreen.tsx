@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { COLORS, navigationStrings } from '../../constants/Lang/navigationStrings';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  COLORS,
+  navigationStrings,
+} from '../../constants/Lang/navigationStrings';
 
 const BagScreen = () => {
-  const navigation = useNavigation<any>()
+  const navigation = useNavigation<any>();
   const route = useRoute<any>();
-  const { product: initialProduct, quantity: initialQty } =
-    route.params || {};
+  const { product: initialProduct, quantity: initialQty } = route.params || {};
 
   const [product, setProduct] = useState(initialProduct);
   const [quantity, setQuantity] = useState<number>(initialQty || 1);
@@ -36,8 +32,6 @@ const BagScreen = () => {
   const total = subtotal + shipping;
 
   return (
-
-
     <SafeAreaView style={styles.container}>
       {product ? (
         <>
@@ -95,13 +89,13 @@ const BagScreen = () => {
               <Text style={styles.totalValue}>₹ {total}</Text>
             </View>
 
-            <TouchableOpacity style={styles.checkoutButton}
-             onPress={()=>{
-              navigation.navigate('PlaceOrder')
-             }}>
-              <Text style={styles.checkoutText}>
-                Proceed To Checkout
-              </Text>
+            <TouchableOpacity
+              style={styles.checkoutButton}
+              onPress={() => {
+                navigation.navigate('PlaceOrder');
+              }}
+            >
+              <Text style={styles.checkoutText}>Proceed To Checkout</Text>
             </TouchableOpacity>
           </View>
         </>
@@ -114,12 +108,10 @@ const BagScreen = () => {
         <View style={[styles.emptyText]}>
           <Text>No product in Bag</Text>
           <TouchableOpacity
-                onPress={()=>navigation.navigate(navigationStrings.HOME)}
-
-          style={styles.addButton}>
-            <Text style={styles.addButtonText}>
-            Add product
-            </Text>
+            onPress={() => navigation.navigate(navigationStrings.HOME)}
+            style={styles.addButton}
+          >
+            <Text style={styles.addButtonText}>Add product</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -181,19 +173,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
- addButton: {
+  addButton: {
     backgroundColor: '#53a20e', // green button
     paddingVertical: 12,
     paddingHorizontal: 25,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 3,           // Android shadow
-    shadowColor: '#000',    // iOS shadow
+    elevation: 3, // Android shadow
+    shadowColor: '#000', // iOS shadow
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    marginVertical: 10,     // spacing from other elements
+    marginVertical: 10, // spacing from other elements
   },
   addButtonText: {
     color: '#fff',
@@ -284,12 +276,11 @@ const styles = StyleSheet.create({
   },
 
   emptyText: {
-
     marginTop: 40,
     fontSize: 16,
     color: COLORS.BLACK,
 
-    alignItems:'center'
+    alignItems: 'center',
   },
 });
 

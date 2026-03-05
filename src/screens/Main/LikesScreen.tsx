@@ -11,7 +11,10 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LikesCard from '../../components/LikesCard';
-import { navigationStrings } from '../../constants/Lang/navigationStrings';
+import {
+  COLORS,
+  navigationStrings,
+} from '../../constants/Lang/navigationStrings';
 
 const LikesScreen = ({ navigation }: any) => {
   const [likedItems, setLikedItems] = useState<any[]>([]);
@@ -62,13 +65,12 @@ const LikesScreen = ({ navigation }: any) => {
     console.log('ITEM DATA:', item);
     return (
       <TouchableOpacity
-       onPress={() =>
-                        navigation.navigate(navigationStrings.PRODUCT_DETAILS, {
-                          productId: item.id,
-
-                        })
-                      }
->
+        onPress={() =>
+          navigation.navigate(navigationStrings.PRODUCT_DETAILS, {
+            productId: item.id,
+          })
+        }
+      >
         <View style={styles.card}>
           <View style={styles.row}>
             {item.thumbnail ? (
@@ -132,7 +134,7 @@ export default LikesScreen;
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#eef2f8',
+    backgroundColor: COLORS.LIGHT_GRAY,
   },
 
   container: {

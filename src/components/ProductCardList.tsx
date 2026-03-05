@@ -10,7 +10,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-import { StarOrange } from '../assets/images';
 import StarRating from './StarRating';
 
 interface ProductCardProps {

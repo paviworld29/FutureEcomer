@@ -1,11 +1,11 @@
+import React from 'react';
 import {
   Image,
+  ImageSourcePropType,
   StyleSheet,
   Text,
   TouchableOpacity,
-  ImageSourcePropType,
 } from 'react-native';
-import React from 'react';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 interface SocialButtonProps {
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
 
     paddingVertical: verticalScale(10),
-
 
     borderRadius: moderateScale(10),
     borderWidth: moderateScale(1),

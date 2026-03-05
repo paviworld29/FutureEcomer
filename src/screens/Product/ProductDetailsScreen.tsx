@@ -1,17 +1,20 @@
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
+  ActivityIndicator,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
 } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { BackICon, BagICon } from '../../assets/images';
-import { COLORS, navigationStrings } from '../../constants/Lang/navigationStrings';
+import {
+  COLORS,
+  navigationStrings,
+} from '../../constants/Lang/navigationStrings';
 import { useGetProductQuery } from '../../redux/services/productApi';
-import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface Product {
   title: string;
@@ -132,20 +135,20 @@ const ProductDetailsScreen = () => {
               </View>
             </TouchableOpacity>
 
-      <TouchableOpacity
-  style={styles.buyButton}
-  onPress={() =>
-    navigation.navigate("Tabs", {
-      screen: navigationStrings.BAG,
-      params: {
-        product: product,
-        quantity: quantity,
-      },
-    })
-  }
->
-  <Text>Buy Now</Text>
-</TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buyButton}
+              onPress={() =>
+                navigation.navigate('Tabs', {
+                  screen: navigationStrings.BAG,
+                  params: {
+                    product: product,
+                    quantity: quantity,
+                  },
+                })
+              }
+            >
+              <Text>Buy Now</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

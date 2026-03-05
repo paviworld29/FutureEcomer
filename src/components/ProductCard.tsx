@@ -1,20 +1,18 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
 import {
+  Image,
+  ImageSourcePropType,
   StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   ViewStyle,
-  Image,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { ImageSourcePropType } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import images, { AddIconSvg, HeartSvg, StarOrange } from '../assets/images';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useCallback } from 'react';
-import { navigationStrings } from '../constants/Lang/navigationStrings';
+import { AddIconSvg, HeartSvg, StarOrange } from '../assets/images';
 
 interface Product {
   id: number;
@@ -30,7 +28,7 @@ interface ProductCardProps {
   image: ImageSourcePropType;
   rating: number;
   item: Product;
-  productId:number
+  productId: number;
   onPress: () => void;
   style?: StyleProp<ViewStyle>;
 }
@@ -44,27 +42,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
   style,
   item,
 }) => {
-
   const navigaton = useNavigation();
   const [liked, setLiked] = useState(false);
 
+  useFocusEffect(
+    useCallback(() => {
+      const checkLiked = async () => {
+        const stored = await AsyncStorage.getItem('liked_products');
+        const likedArray = stored ? JSON.parse(stored) : [];
 
- useFocusEffect(
-  useCallback(() => {
-    const checkLiked = async () => {
-      const stored = await AsyncStorage.getItem('liked_products');
-      const likedArray = stored ? JSON.parse(stored) : [];
+        const alreadyLiked = likedArray.some(
+          (product: any) => product.id === item.id,
+        );
 
-      const alreadyLiked = likedArray.some(
-        (product: any) => product.id === item.id,
-      );
+        setLiked(alreadyLiked);
+      };
 
-      setLiked(alreadyLiked);
-    };
-
-    checkLiked();
-  }, [item.id])
-);
+      checkLiked();
+    }, [item.id]),
+  );
 
   const handleLike = async () => {
     try {
@@ -74,7 +70,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       const alreadyLiked = likedArray.some(product => product.id === item.id);
 
       if (alreadyLiked) {
-
         likedArray = likedArray.filter(product => product.id !== item.id);
         setLiked(false);
       } else {
@@ -122,10 +117,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </View>
 
         <TouchableOpacity
-    //  onPress={()=>navigaton.navigate(navigationStrings.BAG)}
+        //  onPress={()=>navigaton.navigate(navigationStrings.BAG)}
         >
-
-
           <AddIconSvg width={20} height={20} />
         </TouchableOpacity>
       </View>

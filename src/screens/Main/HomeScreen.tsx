@@ -101,7 +101,7 @@ const HomeScreen = ({ navigation }: any) => {
           renderItem={({ item }: any) =>
             activeIcon === 'grid' ? (
               <ProductCard
-              item = {item}
+                item={item}
                 title={item.title}
                 productId={item.id}
                 price={item.price}
@@ -110,7 +110,6 @@ const HomeScreen = ({ navigation }: any) => {
                 onPress={() =>
                   navigation.navigate(navigationStrings.PRODUCT_DETAILS, {
                     productId: item.id,
-
                   })
                 }
                 style={{

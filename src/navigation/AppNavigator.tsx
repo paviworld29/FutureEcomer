@@ -1,10 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import TabNavigator from './TabNavigator';
-import ProductDetailsScreen from '../screens/Product/ProductDetailsScreen';
-import HomeScreen from '../screens/Main/HomeScreen';
-import BagScreen from '../screens/Main/BagScreen';
 import OrderSuccessScreen from '../screens/Product/OrderSuccessScreen';
-
+import ProductDetailsScreen from '../screens/Product/ProductDetailsScreen';
+import TabNavigator from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,8 +18,6 @@ export default function AppNavigator() {
       />
       <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
       <Stack.Screen name="PlaceOrder" component={OrderSuccessScreen} />
-
-
     </Stack.Navigator>
   );
 }
