@@ -81,12 +81,16 @@ const SignUpScreen = ({ navigation }: NativeStackScreenProps<any>) => {
       }).unwrap();
       Alert.alert('Sinup Succesfully now you can login');
       navigation.navigate(navigationStrings.LOGIN);
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        position: 'bottom',
-        text1: 'Signup Failed',
-      });
+    } catch (error:any) {
+   Toast.show({
+  type: 'error',
+  position: 'bottom',
+  text1: 'Signup Failed',
+  text2: error?.data?.message ,
+  text2Style: {
+    fontSize: 16,
+  },
+});
     }
   };
 
